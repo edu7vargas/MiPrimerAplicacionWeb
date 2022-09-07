@@ -1,0 +1,34 @@
+﻿@using MiPrimerAplicacionWeb.Models
+@model List<ViajeCLS>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@Html.ActionLink("Agregar", "Agregar", "Viaje", null, new { @class = "btn btn-primary" })
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <td>@Html.LabelFor(p => Model[0].iidViaje)</td>
+            <td>@Html.LabelFor(p => Model[0].nombreBus)</td>
+            <td>@Html.LabelFor(p => Model[0].nombreLugarOrigen)</td>
+            <td>@Html.LabelFor(p => Model[0].nombreLugarDestino)</td>
+            <td width="10%">Operaciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.iidViaje</td>
+                <td>@item.nombreBus</td>
+                <td>@item.nombreLugarOrigen</td>
+                <td>@item.nombreLugarDestino</td>
+                <td>
+                    @Html.ActionLink(" ", "Editar", "Viaje", new { id = @item.iidViaje }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+                    @Html.ActionLink(" ", "Elimninar", "Viaje", new { id = @item.iidViaje }, new { @class = "glyphicon glyphicon-trash  btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

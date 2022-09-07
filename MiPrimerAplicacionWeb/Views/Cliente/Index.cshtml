@@ -1,0 +1,86 @@
+﻿@using MiPrimerAplicacionWeb.Models;
+@model List<ClienteCLS>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Cliente</h2>
+
+@Html.ActionLink("Agregar", "Agregar", "Cliente", null, new { @class = "btn btn-primary" })
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td width="5%">@Html.LabelFor(p => Model[0].iidcliente)</td>
+            <td width="15%">@Html.LabelFor(p => Model[0].nombre)</td>
+            <td width="15%">@Html.LabelFor(p => Model[0].appaterno)</td>
+            <td width="15%">@Html.LabelFor(p => Model[0].apmaterno)</td>
+            <td width="10%">@Html.LabelFor(p => Model[0].email)</td>
+            <td width="30%">@Html.LabelFor(p => Model[0].direccion)</td>
+            <td width="5%">@Html.LabelFor(p => Model[0].telefonocelular)</td>
+            <td width="5%">Operaciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.iidcliente</td>
+                <td>@item.nombre</td>
+                <td>@item.appaterno</td>
+                <td>@item.apmaterno</td>
+                <td>@item.email</td>
+                <td>@item.direccion</td>
+                <td>@item.telefonocelular</td>
+                <td>
+                    @Html.ActionLink(" ", "Editar", "Cliente", new { id = @item.iidcliente }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+                    @*@Html.ActionLink(" ", "Elimninar", "Cliente", new { id = @item.iidcliente }, new { @class = "glyphicon glyphicon-trash  btn btn-danger" })*@
+                    <button type="button" class="glyphicon glyphicon-trash  btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="MostrarPopup(@item.iidcliente)"></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@using (Html.BeginForm("Eliminar", "Cliente", FormMethod.Post, new { @id = "frmEliminarCliente" }))
+{
+    @Html.Hidden("iidcliente");
+}
+
+
+
+<script>
+    function MostrarPopup(id) {
+        document.getElementById("iidcliente").value = id;
+    }
+
+
+    function Eliminar() {
+        var frmEliminarCliente = document.getElementById("frmEliminarCliente");
+        frmEliminarCliente.submit();
+    }
+
+</script>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro de eliminar el Cliente seleccionado?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="padding:1em;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" onclick="Eliminar()">Si</button>
+            </div>
+        </div>
+    </div>
+</div>

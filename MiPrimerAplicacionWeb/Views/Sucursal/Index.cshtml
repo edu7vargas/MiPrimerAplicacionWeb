@@ -1,0 +1,94 @@
+﻿@using MiPrimerAplicacionWeb.Models;
+@model List<SucursalCLS>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sucursal</h2>
+@Html.ActionLink("Agregar", "Agregar", "Sucursal", null, new { @class = "btn btn-primary" })
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>@Html.LabelFor(p => Model[0].iidsucursal)</td>
+            <td>@Html.LabelFor(p => Model[0].nombre)</td>
+            <td>@Html.LabelFor(p => Model[0].telefono)</td>
+            <td>@Html.LabelFor(p => Model[0].email)</td>
+            <td>@Html.LabelFor(p => Model[0].fechaapertura)</td>
+            <td width="5%">Operaciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.iidsucursal</td>
+                <td>@item.nombre</td>
+                <td>@item.telefono</td>
+                <td>@item.email</td>
+                <td>@item.fechaapertura</td>
+                <td>
+                    @Html.ActionLink(" ", "Editar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+
+                    <button type="button" class="glyphicon glyphicon-trash  btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="MostrarPopup(@item.iidsucursal)"></button>
+
+
+                    @*@Html.ActionLink(" ", "Eliminar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-trash  btn btn-danger", @onclick = "Eliminar('" + @item.nombre + "')" })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+
+</table>
+
+
+@using (Html.BeginForm("Eliminar", "Sucursal", FormMethod.Post, new { @id = "frmEliminarSucursal" }))
+{
+    @Html.Hidden("iidsucursal");
+}
+
+<script>
+    /*
+    function Eliminar(nombre) {
+        if (confirm("¿Esta seguro de eliminar la sucursal "+ nombre +"?")) {
+
+        } else {
+            event.preventDefault();
+        }
+    }
+    */
+
+    function MostrarPopup(id) {
+        document.getElementById("iidsucursal").value = id;
+    }
+
+    function Eliminar() {
+        var frmEliminarSucursal = document.getElementById("frmEliminarSucursal");
+        frmEliminarSucursal.submit();
+    }
+
+
+</script>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro de eliminar el Sucursal seleccionado?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="padding:1em;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" onclick="Eliminar()">Si</button>
+            </div>
+        </div>
+    </div>
+</div>

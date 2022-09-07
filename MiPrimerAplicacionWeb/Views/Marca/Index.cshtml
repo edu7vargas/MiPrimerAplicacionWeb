@@ -1,0 +1,100 @@
+﻿@using MiPrimerAplicacionWeb.Models;
+@model List<MarcaCLS>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Marca</h2>
+
+@Html.ActionLink("Agregar", "Agregar", "Marca", null, new { @class = "btn btn-primary" })
+
+
+@using (Html.BeginForm("Index", "Marca", FormMethod.Post))
+{
+    @Html.Label("Ingrese nombre de marca")
+    @Html.TextBox("nombre")
+    <input type="submit" class="btn btn-success" value="Buscar" />
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td width="10%">@Html.LabelFor(p => Model[0].iidmarca)</td>
+                <td width="20%">@Html.LabelFor(p => Model[0].nombre)</td>
+                <td width="60%">@Html.LabelFor(p => Model[0].descripcion)</td>
+                <td width="10%">Operaciones</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.iidmarca</td>
+                    <td>@item.nombre</td>
+                    <td>@item.descripcion</td>
+                    <td>
+                        @Html.ActionLink(" ", "Editar", "Marca", new { id = @item.iidmarca }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+
+                        <button type="button" class="glyphicon glyphicon-trash  btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="MostrarPopup(@item.iidmarca)"></button>
+
+
+                        @*@Html.ActionLink(" ", "Eliminar", "Marca", new { id = @item.iidmarca }, new { @class = "glyphicon glyphicon-trash  btn btn-danger", @onclick = "Eliminar('" + @item.nombre + "')" })*@
+
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+
+@using (Html.BeginForm("Eliminar", "Marca", FormMethod.Post, new { @id = "frmEliminar" }))
+{
+    @Html.Hidden("iidmarca");
+}
+
+
+<script>
+
+    function MostrarPopup(id) {
+        document.getElementById("iidmarca").value = id
+        // document.getElementById("titleModal").innerText = '¿Deseas eliminar la Marca ' + nombre + '?'
+    }
+
+    function Eliminar() {
+        var frmEliminar = document.getElementById("frmEliminar");
+        frmEliminar.submit();
+    }
+
+    /*
+    function Eliminar(nombre) {
+        if (confirm("¿Esta seguro de eliminar la marca " + nombre + "?")) {
+
+        } else {
+            event.preventDefault();
+        }
+    }
+    */
+
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro de eliminar el Marca seleccionado?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="padding:1em;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" onclick="Eliminar()">Si</button>
+            </div>
+        </div>
+    </div>
+</div>
