@@ -2,11 +2,19 @@
 @model List<BusCLS>
 @{
     ViewBag.Title = "Index";
+    List<SelectListItem> listaTipoBus = (List<SelectListItem>)ViewBag.listaTipoBus;
+    List<SelectListItem> listaMarca = (List<SelectListItem>)ViewBag.listaMarca;
+    List<SelectListItem> listaModelo = (List<SelectListItem>)ViewBag.listaModelo;
+    List<SelectListItem> listaSucursal = (List<SelectListItem>)ViewBag.listaSucursal;
 }
 <h2>Bus</h2>
 
 
 @Html.ActionLink("Agregar", "Agregar", "Bus", null, new { @class = "btn btn-primary" })
+
+
+@using (Html.BeginForm("Index", "Bus", FormMethod.Post, new { @id = "frmBusquedaBus" }))
+{
 
 <table class="table table-hover table-bordered">
     <thead>
@@ -19,6 +27,15 @@
             <td>@Html.LabelFor(p => Model[0].nombreSucursal)</td>
             <td width="5%">Operaciones</td>
 
+        </tr>
+        <tr>
+            <td>@Html.TextBox("iidbus", null, new { @class = "form-control" })</td>
+            <td>@Html.TextBox("placa", null, new { @class = "form-control" })</td>
+            <td>@Html.DropDownList("iidmarca", listaMarca, new { @class = "form-control" })</td>
+            <td>@Html.DropDownList("iidmodelo", listaModelo, new { @class = "form-control" })</td>
+            <td>@Html.DropDownList("iidtipobus", listaTipoBus, new { @class = "form-control" })</td>
+            <td>@Html.DropDownList("iidsucursal", listaSucursal, new { @class = "form-control" })</td>
+            <td></td>
         </tr>
     </thead>
     <tbody>
@@ -41,6 +58,7 @@
         }
     </tbody>
 </table>
+}
 
 @using (Html.BeginForm("Eliminar", "Bus", FormMethod.Post, new { @id = "frmEliminarBus" }))
 {
@@ -48,6 +66,8 @@
 }
 
 <script>
+
+    // mostrar pop-up para eliminar
     function MostrarPopup(id)
     {
         document.getElementById("iidbus").value = id;
@@ -59,6 +79,24 @@
         var frmEliminarBus = document.getElementById("frmEliminarBus");
         frmEliminarBus.submit();
     }
+
+
+
+    // Funciones para busqueda
+    var frmBusquedaBus = document.getElementById("frmBusquedaBus");
+    var controlesFiltro = document.getElementsByClassName("form-control");
+    nroControles = controlesFiltro.length;
+    for (i = 0; i < nroControles; i++){
+        controlesFiltro[i].onchange = function () {
+            frmBusquedaBus.submit();
+        }
+    }
+
+
+
+        
+    
+
 
 </script>
 

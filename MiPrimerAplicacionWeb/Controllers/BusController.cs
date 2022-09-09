@@ -9,13 +9,54 @@ namespace MiPrimerAplicacionWeb.Controllers
 {
     public class BusController : Controller
     {
-        // GET: Bus
-        public ActionResult Index()
+
+        private BusCLS oBusVal;
+        private bool buscarBus(BusCLS oBusCLS)
         {
+            bool busquedaId = true;
+            bool busquedaPlaca = true;
+            bool busquedaMarca = true;
+            bool busquedaModelo = true;
+            bool busquedaTipoBus = true;
+            bool busquedaSucursal = true;
+
+            if (oBusVal.iidbus > 0)
+                busquedaId = oBusCLS.iidbus.ToString().Contains(oBusVal.iidbus.ToString());
+
+            if (oBusVal.placa != null)
+                busquedaPlaca = oBusCLS.placa.ToString().Contains(oBusVal.placa.ToString());
+
+            if (oBusVal.iidmarca > 0)
+                busquedaMarca = oBusCLS.iidmarca.ToString().Contains(oBusVal.iidmarca.ToString());
+
+            if (oBusVal.iidmodelo > 0)
+                busquedaModelo = oBusCLS.iidmodelo.ToString().Contains(oBusVal.iidmodelo.ToString());
+
+            if (oBusVal.iidtipobus > 0)
+                busquedaTipoBus = oBusCLS.iidtipobus.ToString().Contains(oBusVal.iidtipobus.ToString());
+
+            if (oBusVal.iidsucursal > 0)
+                busquedaSucursal = oBusCLS.iidsucursal.ToString().Contains(oBusVal.iidsucursal.ToString());
+
+
+
+            return (busquedaId && busquedaPlaca && busquedaMarca && busquedaModelo && busquedaTipoBus && busquedaSucursal);
+        }
+
+
+        // GET: Bus
+        public ActionResult Index(BusCLS oBusCLS)
+        {
+            oBusVal = oBusCLS;
+
             List<BusCLS> listaBus = null;
+
+            List<BusCLS> listaFiltrado = null;
+
+
             using (var bd = new BDPasajeEntities())
             {
-
+                listarCombos();
 
                 listaBus = (from bus in bd.Bus
                                  join sucursal in bd.Sucursal
@@ -39,12 +80,30 @@ namespace MiPrimerAplicacionWeb.Controllers
                                     nombreTipoBus = tipobus.NOMBRE,
                                     nombreSucursal = sucursal.NOMBRE,
                                     nombreModelo = modelo.NOMBRE,
-                                    nombreMarca = marca.NOMBRE
+                                    nombreMarca = marca.NOMBRE,
+                                    iidmarca = (int)bus.IIDMARCA,
+                                    iidmodelo = (int)bus.IIDMODELO,
+                                    iidsucursal = (int)bus.IIDSUCURSAL,
+                                    iidtipobus = (int)bus.IIDTIPOBUS
 
-                                 }).ToList();
+                            }).ToList();
+
+
+                if (oBusCLS.iidbus == 0 && oBusCLS.placa == null && oBusCLS.iidmarca == 0 && oBusCLS.iidmodelo == 0 && oBusCLS.iidtipobus == 0 && oBusCLS.iidsucursal == 0)
+                {
+                    listaFiltrado = listaBus;
+                }
+                else
+                {
+                    Predicate<BusCLS> pred = new Predicate<BusCLS>(buscarBus);
+                    listaFiltrado = listaBus.FindAll(pred);
+                    
+                }
+
+
             }
 
-            return View(listaBus);
+            return View(listaFiltrado);
         
         }
 
@@ -217,7 +276,7 @@ namespace MiPrimerAplicacionWeb.Controllers
                              Text = tipobus.NOMBRE,
                              Value = tipobus.IIDTIPOBUS.ToString()
                          }).ToList();
-                lista.Insert(0, new SelectListItem { Text = "--Seleccione --", Value = "" });
+                lista.Insert(0, new SelectListItem { Text = "--Seleccione --", Value = "0" });
                 ViewBag.listaTipoBus = lista;
             }
 
@@ -241,7 +300,7 @@ namespace MiPrimerAplicacionWeb.Controllers
                              Text = marca.NOMBRE,
                              Value = marca.IIDMARCA.ToString()
                          }).ToList();
-                lista.Insert(0, new SelectListItem { Text = "--Seleccione --", Value = "" });
+                lista.Insert(0, new SelectListItem { Text = "--Seleccione --", Value = "0" });
                 ViewBag.listaMarca = lista;
             }
 
@@ -263,7 +322,7 @@ namespace MiPrimerAplicacionWeb.Controllers
                              Text = modelo.NOMBRE,
                              Value = modelo.IIDMODELO.ToString()
                          }).ToList();
-                lista.Insert(0, new SelectListItem { Text = "--Seleccione --", Value = "" });
+                lista.Insert(0, new SelectListItem { Text = "--Seleccione --", Value = "0" });
                 ViewBag.listaModelo = lista;
             }
 
@@ -284,7 +343,7 @@ namespace MiPrimerAplicacionWeb.Controllers
                              Text = sucursal.NOMBRE,
                              Value = sucursal.IIDSUCURSAL.ToString()
                          }).ToList();
-                lista.Insert(0, new SelectListItem { Text = "--Seleccione --", Value = "" });
+                lista.Insert(0, new SelectListItem { Text = "--Seleccione --", Value = "0" });
                 ViewBag.listaSucursal = lista;
             }
 

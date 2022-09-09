@@ -10,22 +10,47 @@ namespace MiPrimerAplicacionWeb.Controllers
     public class SucursalController : Controller
     {
         // GET: Sucursal
-        public ActionResult Index()
+        public ActionResult Index(SucursalCLS oSucursalCls)
         {
-            List<SucursalCLS> listaSucursal;
+            List<SucursalCLS> listaSucursal =  null;
+            string nombreSucursal = oSucursalCls.nombre;
+
             using (var bd = new BDPasajeEntities())
-            {
-                listaSucursal = (from sucursal in bd.Sucursal
-                                 where sucursal.BHABILITADO == 1
-                                 select new SucursalCLS
-                                 {
-                                     iidsucursal = sucursal.IIDSUCURSAL,
-                                     nombre = sucursal.NOMBRE,
-                                     direccion = sucursal.DIRECCION,
-                                     telefono = sucursal.TELEFONO,
-                                     email = sucursal.EMAIL
-                                 }).ToList();
+            { 
+                if (oSucursalCls.nombre == null)
+                {
+              
+                        listaSucursal = (from sucursal in bd.Sucursal
+                                         where sucursal.BHABILITADO == 1
+                                         select new SucursalCLS
+                                         {
+                                             iidsucursal = sucursal.IIDSUCURSAL,
+                                             nombre = sucursal.NOMBRE,
+                                             direccion = sucursal.DIRECCION,
+                                             telefono = sucursal.TELEFONO,
+                                             email = sucursal.EMAIL
+                                         }).ToList();
+              
+                }
+                else {
+
+                    listaSucursal = (from sucursal in bd.Sucursal
+                                     where sucursal.BHABILITADO == 1
+                                     && sucursal.NOMBRE.Contains(nombreSucursal)
+                                     select new SucursalCLS
+                                     {
+                                         iidsucursal = sucursal.IIDSUCURSAL,
+                                         nombre = sucursal.NOMBRE,
+                                         direccion = sucursal.DIRECCION,
+                                         telefono = sucursal.TELEFONO,
+                                         email = sucursal.EMAIL
+                                     }).ToList();
+
+                }
+                
             }
+
+
 
 
             return View(listaSucursal);

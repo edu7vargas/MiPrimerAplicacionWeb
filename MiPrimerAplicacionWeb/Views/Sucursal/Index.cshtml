@@ -8,42 +8,47 @@
 <h2>Sucursal</h2>
 @Html.ActionLink("Agregar", "Agregar", "Sucursal", null, new { @class = "btn btn-primary" })
 
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <td>@Html.LabelFor(p => Model[0].iidsucursal)</td>
-            <td>@Html.LabelFor(p => Model[0].nombre)</td>
-            <td>@Html.LabelFor(p => Model[0].telefono)</td>
-            <td>@Html.LabelFor(p => Model[0].email)</td>
-            <td>@Html.LabelFor(p => Model[0].fechaapertura)</td>
-            <td width="5%">Operaciones</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.iidsucursal</td>
-                <td>@item.nombre</td>
-                <td>@item.telefono</td>
-                <td>@item.email</td>
-                <td>@item.fechaapertura</td>
-                <td>
-                    @Html.ActionLink(" ", "Editar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
 
-                    <button type="button" class="glyphicon glyphicon-trash  btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="MostrarPopup(@item.iidsucursal)"></button>
+@using (Html.BeginForm("Index", "Sucursal", FormMethod.Get, new { @id = "frmBusquedaSucursal" }))
+{
+        @Html.Label("Ingrese nombre de marca")
+        @Html.TextBox("nombre")
 
 
-                    @*@Html.ActionLink(" ", "Eliminar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-trash  btn btn-danger", @onclick = "Eliminar('" + @item.nombre + "')" })*@
-                </td>
-            </tr>
-        }
-    </tbody>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>@Html.LabelFor(p => Model[0].iidsucursal)</td>
+                    <td>@Html.LabelFor(p => Model[0].nombre)</td>
+                    <td>@Html.LabelFor(p => Model[0].telefono)</td>
+                    <td>@Html.LabelFor(p => Model[0].email)</td>
+                    <td>@Html.LabelFor(p => Model[0].fechaapertura)</td>
+                    <td width="5%">Operaciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.iidsucursal</td>
+                        <td>@item.nombre</td>
+                        <td>@item.telefono</td>
+                        <td>@item.email</td>
+                        <td>@item.fechaapertura</td>
+                        <td>
+                            @Html.ActionLink(" ", "Editar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+
+                            <button type="button" class="glyphicon glyphicon-trash  btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="MostrarPopup(@item.iidsucursal)"></button>
 
 
+                            @*@Html.ActionLink(" ", "Eliminar", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-trash  btn btn-danger", @onclick = "Eliminar('" + @item.nombre + "')" })*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
 
-</table>
-
+        </table>
+}
 
 @using (Html.BeginForm("Eliminar", "Sucursal", FormMethod.Post, new { @id = "frmEliminarSucursal" }))
 {
@@ -69,6 +74,19 @@
         var frmEliminarSucursal = document.getElementById("frmEliminarSucursal");
         frmEliminarSucursal.submit();
     }
+
+
+
+
+    var nombre = document.getElementById("nombre");
+    nombre.onkeyup = function ()
+    {
+        var frmBusquedaSucursal = document.getElementById("frmBusquedaSucursal");
+        frmBusquedaSucursal.submit();
+        document.getElementById("nombre").focus();
+    }
+
+
 
 
 </script>

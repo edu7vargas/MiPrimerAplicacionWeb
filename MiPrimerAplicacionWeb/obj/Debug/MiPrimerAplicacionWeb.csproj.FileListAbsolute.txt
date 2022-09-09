@@ -153,6 +153,4 @@ C:\PROYECTOS_SW\personales\PYTOS-Udemy\MiPrimerAplicacionWeb\MiPrimerAplicacionW
 C:\PROYECTOS_SW\personales\PYTOS-Udemy\MiPrimerAplicacionWeb\MiPrimerAplicacionWeb\bin\es\System.Web.Mvc.resources.dll
 C:\PROYECTOS_SW\personales\PYTOS-Udemy\MiPrimerAplicacionWeb\MiPrimerAplicacionWeb\obj\Debug\MiPrimerAplicacionWeb.dll
 C:\PROYECTOS_SW\personales\PYTOS-Udemy\MiPrimerAplicacionWeb\MiPrimerAplicacionWeb\obj\Debug\MiPrimerAplicacionWeb.pdb
-C:\PROYECTOS_SW\personales\PYTOS-Udemy\MiPrimerAplicacionWeb\MiPrimerAplicacionWeb\obj\Debug\MiPrimerAplicacionWeb.csprojAssemblyReference.cache
-C:\PROYECTOS_SW\personales\PYTOS-Udemy\MiPrimerAplicacionWeb\MiPrimerAplicacionWeb\obj\Debug\MiPrimerAplicacionWeb.csproj.CoreCompileInputs.cache
-C:\PROYECTOS_SW\personales\PYTOS-Udemy\MiPrimerAplicacionWeb\MiPrimerAplicacionWeb\obj\Debug\MiPrimerAplicacionWeb.csproj.CopyComplete
+C:\PROYECTOS_SW\personales\PYTOS-Udemy\MiPrimerAplicacionWeb\MiPrimerAplicacionWeb\obj\Debug\MiPrimerAplicacionWeb.csprojResolveAssemblyReference.cache

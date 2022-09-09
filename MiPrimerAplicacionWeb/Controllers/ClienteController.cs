@@ -10,26 +10,55 @@ namespace MiPrimerAplicacionWeb.Controllers
     public class ClienteController : Controller
     {
         // GET: Cliente
-        public ActionResult Index()
+        public ActionResult Index(ClienteCLS oClienteCLS)
         {
+
+            int idSexo = oClienteCLS.iidsexo;
+
             List<ClienteCLS> listaCliente;
             using (var bd = new BDPasajeEntities())
             {
-                listaCliente = (from cliente in bd.Cliente
-                              where cliente.BHABILITADO == 1
-                              select new ClienteCLS
-                              {
-                                  iidcliente = cliente.IIDCLIENTE,
-                                  nombre = cliente.NOMBRE,
-                                  appaterno = cliente.APPATERNO,
-                                  apmaterno = cliente.APMATERNO,
-                                  email = cliente.EMAIL,
-                                  direccion = cliente.DIRECCION,
-                                  telefonocelular = cliente.TELEFONOCELULAR,
-                                  telefonofijo = cliente.TELEFONOFIJO
 
-                              }).ToList();
+                if (idSexo == 0)
+                {
+                    listaCliente = (from cliente in bd.Cliente
+                                    where cliente.BHABILITADO == 1
+                                    select new ClienteCLS
+                                    {
+                                        iidcliente = cliente.IIDCLIENTE,
+                                        nombre = cliente.NOMBRE,
+                                        appaterno = cliente.APPATERNO,
+                                        apmaterno = cliente.APMATERNO,
+                                        email = cliente.EMAIL,
+                                        direccion = cliente.DIRECCION,
+                                        telefonocelular = cliente.TELEFONOCELULAR,
+                                        telefonofijo = cliente.TELEFONOFIJO
+
+                                    }).ToList();
+                }
+                else {
+                    listaCliente = (from cliente in bd.Cliente
+                                    where cliente.BHABILITADO == 1
+                                    && cliente.IIDSEXO == idSexo
+                                    select new ClienteCLS
+                                    {
+                                        iidcliente = cliente.IIDCLIENTE,
+                                        nombre = cliente.NOMBRE,
+                                        appaterno = cliente.APPATERNO,
+                                        apmaterno = cliente.APMATERNO,
+                                        email = cliente.EMAIL,
+                                        direccion = cliente.DIRECCION,
+                                        telefonocelular = cliente.TELEFONOCELULAR,
+                                        telefonofijo = cliente.TELEFONOFIJO
+
+                                    }).ToList();
+                }
+
             }
+
+            llenarSexo();
+            ViewBag.lista = listaSexo;
+
 
             return View(listaCliente);
         }

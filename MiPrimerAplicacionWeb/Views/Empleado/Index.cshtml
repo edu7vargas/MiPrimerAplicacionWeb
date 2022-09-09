@@ -3,10 +3,19 @@
 
 @{
     ViewBag.Title = "Index";
+    //List<SelectListItem> listaSexo = (List<SelectListItem>)ViewBag.listaSexo;
+    // List<SelectListItem> listaTipoContrato = (List<SelectListItem>)ViewBag.listaTipoContrato;
+    List<SelectListItem> listaTipoUsuario = (List<SelectListItem>)ViewBag.listaTipoUsuario;
 }
 
 <h2>Empleado</h2>
 @Html.ActionLink("Agregar", "Agregar", "Empleado", null, new { @class = "btn btn-primary" })
+
+@using (Html.BeginForm("Index", "Empleado", FormMethod.Get,new { @id= "frmBusquedaEmpleado" }))
+{
+@Html.Label("Tipo de usuario")
+@Html.DropDownList("iidtipoUsuario", listaTipoUsuario)
+
 
 <table class="table table-hover table-bordered">
     <thead>
@@ -39,6 +48,8 @@
         }
     </tbody>
 </table>
+}
+
 
 @using (Html.BeginForm("Eliminar", "Empleado", FormMethod.Post, new { @id = "frmEliminarEmpleado" }))
 {
@@ -48,6 +59,8 @@
 
 <script>
 
+
+    // Mostrar pop-up para eliminar
     function MostrarPopup(id) {
         document.getElementById("iidEmpleado").value = id;
     }
@@ -61,6 +74,16 @@
         frmEliminarEmpleado.submit();
     }
 
+
+
+    var iidtipoUsuario = document.getElementById("iidtipoUsuario");
+    iidtipoUsuario.onchange = function () {
+
+        // busqueda sin boton Buscar
+        var frmBusquedaEmpleado = document.getElementById("frmBusquedaEmpleado");
+        frmBusquedaEmpleado.submit();
+
+    }
 
 </script>
 
