@@ -8,7 +8,7 @@
 =========<br>
 carpeta:				MiPrimerAplicacionWeb<br>
 IDE: 					Visual Studio 2015<br>
-Tecnologías:			<br>
+Tecnologías:			C#, JAVASCRIPT, BOOTSTRAP, ENTITY FRAMEWORK, RAZOR, SQL SERVER
 Arquitectura:			MVC ASP .Net<br><br>
 
 	
